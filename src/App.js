@@ -1,9 +1,14 @@
 import React from 'react';
 import './App.css';
+import ProviderTable from './context/ProviderTable';
+import Table from './component/Table';
 
 function App() {
   return (
-    <span> Projeto Star Wars!</span>
+    <ProviderTable>
+      <h1>Projeto Star Wars</h1>
+      <Table />
+    </ProviderTable>
   );
 }
 
