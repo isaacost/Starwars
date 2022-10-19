@@ -4,6 +4,7 @@ import ContextTable from './ContextTable';
 
 function ProviderTable({ children }) {
   const [data, setData] = useState([]);
+  const [planeta, setPlaneta] = useState('');
 
   useEffect(() => {
     const requestAPI = async () => {
@@ -16,7 +17,15 @@ function ProviderTable({ children }) {
     requestAPI();
   }, []);
 
-  const value = useMemo(() => ({ data }), [data]);
+  const handlePlaneta = ({ target: { value } }) => {
+    setPlaneta(value);
+  };
+
+  const value = useMemo(() => ({
+    data,
+    planeta,
+    handlePlaneta,
+  }), [data, planeta]);
 
   return (
     <ContextTable.Provider value={ value }>

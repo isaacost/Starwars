@@ -2,10 +2,10 @@ import { useContext } from 'react';
 import ContextTable from '../context/ContextTable';
 
 function Table() {
-  const { data } = useContext(ContextTable);
+  const { data, planeta } = useContext(ContextTable);
 
   return (
-    <table>
+    <table border="1 px">
       <thead>
         <tr>
           <th>Name</th>
@@ -25,49 +25,56 @@ function Table() {
       </thead>
       <tbody>
         {
-          data.map((element) => (
-            <tr key={ element.name }>
-              <td>
-                {element.name}
-              </td>
-              <td>
-                {element.climate}
-              </td>
-              <td>
-                {element.created}
-              </td>
-              <td>
-                {element.diameter}
-              </td>
-              <td>
-                {element.edited}
-              </td>
-              <td>
-                {element.films}
-              </td>
-              <td>
-                {element.gravity}
-              </td>
-              <td>
-                {element.orbital_period}
-              </td>
-              <td>
-                {element.population}
-              </td>
-              <td>
-                {element.rotation_period}
-              </td>
-              <td>
-                {element.surface_water}
-              </td>
-              <td>
-                {element.terrain}
-              </td>
-              <td>
-                {element.url}
-              </td>
-            </tr>
-          ))
+          (data
+            .filter((element) => element.name.toLowerCase()
+              .includes(planeta.toLowerCase()))
+            .map((element) => (
+              <tr key={ element.name }>
+                <td>
+                  {element.name}
+                </td>
+                <td>
+                  {element.climate}
+                </td>
+                <td>
+                  {element.created}
+                </td>
+                <td>
+                  {element.diameter}
+                </td>
+                <td>
+                  {element.edited}
+                </td>
+                <td>
+                  {element.films.map((e, i) => (
+                    <ul key={ i }>
+                      <li>{e}</li>
+                    </ul>
+                  ))}
+                </td>
+                <td>
+                  {element.gravity}
+                </td>
+                <td>
+                  {element.orbital_period}
+                </td>
+                <td>
+                  {element.population}
+                </td>
+                <td>
+                  {element.rotation_period}
+                </td>
+                <td>
+                  {element.surface_water}
+                </td>
+                <td>
+                  {element.terrain}
+                </td>
+                <td>
+                  {element.url}
+                </td>
+              </tr>
+            )))
         }
       </tbody>
     </table>
