@@ -30,7 +30,7 @@ function Table() {
               .includes(planeta.toLowerCase()))
             .map((element) => (
               <tr key={ element.name }>
-                <td>
+                <td data-testid="planet-name">
                   {element.name}
                 </td>
                 <td>

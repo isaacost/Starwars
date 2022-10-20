@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useCallback } from 'react';
 import ContextTable from './ContextTable';
 
 const optionsFilter = ['population', 'orbital_period', 'diameter',
@@ -14,6 +14,16 @@ function ProviderTable({ children }) {
   const [column, setColumn] = useState(filters[0]);
   const [filterSelecionado, setFilterSelecionado] = useState([]);
   const [inicial, setInicial] = useState([]);
+  const [columnSort, setColumnSort] = useState('population');
+  const [radioSort, setRadioSort] = useState('ASC');
+
+  const handleColumnSort = ({ target: { value } }) => {
+    setColumnSort(value);
+  };
+
+  const handleRadioSort = ({ target: { value } }) => {
+    setRadioSort(value);
+  };
 
   const handleColumn = ({ target: { value } }) => {
     setColumn(value);
@@ -27,7 +37,7 @@ function ProviderTable({ children }) {
     setValeuFilter(value);
   };
 
-  const handleButtonFilter = () => {
+  const handleButtonFilter = useCallback(() => {
     const filterFilters = filters.filter((e) => e !== column);
     setFilters(filterFilters);
     setColumn(filterFilters[0]);
@@ -49,7 +59,24 @@ function ProviderTable({ children }) {
       setFilterSelecionado([...filterSelecionado,
         { column, comparison, value: valueFilter, array: filter }]);
     }
-  };
+  }, [column, comparison, data, filterSelecionado, filters, valueFilter]);
+
+  const handleSort = useCallback(() => {
+    if (radioSort === 'ASC') {
+      const unknowns = [...data].filter((e) => e[columnSort] === 'unknown');
+      const knowns = [...data].filter((e) => e[columnSort] !== 'unknown');
+      const arrayNumero = knowns
+        .sort((a, b) => Number(a[columnSort]) - Number(b[columnSort]));
+      setData([...arrayNumero, ...unknowns]);
+    }
+    if (radioSort === 'DESC') {
+      const unknowns = [...data].filter((e) => e[columnSort] === 'unknown');
+      const knowns = [...data].filter((e) => e[columnSort] !== 'unknown');
+      const arrayNumero = knowns
+        .sort((a, b) => Number(b[columnSort]) - Number(a[columnSort]));
+      setData([...arrayNumero, ...unknowns]);
+    }
+  }, [columnSort, radioSort, data]);
 
   useEffect(() => {
     const requestAPI = async () => {
@@ -63,13 +90,13 @@ function ProviderTable({ children }) {
     requestAPI();
   }, []);
 
-  const excluirTodos = () => {
+  const excluirTodos = useCallback(() => {
     setData(inicial);
     setFilters(optionsFilter);
     setFilterSelecionado([]);
-  };
+  }, [inicial]);
 
-  const excluirFiltro = (element) => {
+  const excluirFiltro = useCallback((element) => {
     if (filterSelecionado.length === 1) {
       setData(inicial);
       setFilters(optionsFilter);
@@ -81,7 +108,7 @@ function ProviderTable({ children }) {
       setFilters([...filters, element.column]);
       setData(filterSelecionado[filterSelecionado.length - 2].array);
     }
-  };
+  }, [filterSelecionado, filters, inicial]);
 
   const handlePlaneta = ({ target: { value } }) => {
     setPlaneta(value);
@@ -104,7 +131,14 @@ function ProviderTable({ children }) {
     setFilterSelecionado,
     excluirTodos,
     excluirFiltro,
-  }), [data, planeta, column, comparison, valueFilter, filters, filterSelecionado]);
+    optionsFilter,
+    columnSort,
+    handleColumnSort,
+    radioSort,
+    handleRadioSort,
+    handleSort,
+  }), [data, planeta, column, comparison, valueFilter, filters, filterSelecionado,
+    handleButtonFilter, excluirTodos, excluirFiltro, columnSort, radioSort, handleSort]);
 
   return (
     <ContextTable.Provider value={ value }>
