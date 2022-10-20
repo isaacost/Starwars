@@ -12,6 +12,8 @@ function ProviderTable({ children }) {
   const [valueFilter, setValeuFilter] = useState(0);
   const [filters, setFilters] = useState(optionsFilter);
   const [column, setColumn] = useState(filters[0]);
+  const [filterSelecionado, setFilterSelecionado] = useState([]);
+  const [inicial, setInicial] = useState([]);
 
   const handleColumn = ({ target: { value } }) => {
     setColumn(value);
@@ -32,14 +34,20 @@ function ProviderTable({ children }) {
     if (comparison === 'maior que') {
       const filter = data.filter((e) => Number(e[column]) > Number(valueFilter));
       setData(filter);
+      setFilterSelecionado([...filterSelecionado,
+        { column, comparison, value: valueFilter, array: filter }]);
     }
     if (comparison === 'menor que') {
       const filter = data.filter((e) => Number(e[column]) < Number(valueFilter));
       setData(filter);
+      setFilterSelecionado([...filterSelecionado,
+        { column, comparison, value: valueFilter, array: filter }]);
     }
     if (comparison === 'igual a') {
       const filter = data.filter((e) => e[column] === valueFilter);
       setData(filter);
+      setFilterSelecionado([...filterSelecionado,
+        { column, comparison, value: valueFilter, array: filter }]);
     }
   };
 
@@ -50,9 +58,30 @@ function ProviderTable({ children }) {
       const { results } = await response.json();
       const filter = results.filter((element) => delete element.residents);
       setData(filter);
+      setInicial(filter);
     };
     requestAPI();
   }, []);
+
+  const excluirTodos = () => {
+    setData(inicial);
+    setFilters(optionsFilter);
+    setFilterSelecionado([]);
+  };
+
+  const excluirFiltro = (element) => {
+    if (filterSelecionado.length === 1) {
+      setData(inicial);
+      setFilters(optionsFilter);
+      setFilterSelecionado([]);
+    }
+    if (filterSelecionado.length >= 2) {
+      const filter = filterSelecionado.filter((e) => e.column !== element.column);
+      setFilterSelecionado(filter);
+      setFilters([...filters, element.column]);
+      setData(filterSelecionado[filterSelecionado.length - 2].array);
+    }
+  };
 
   const handlePlaneta = ({ target: { value } }) => {
     setPlaneta(value);
@@ -71,7 +100,11 @@ function ProviderTable({ children }) {
     handleButtonFilter,
     filters,
     setFilters,
-  }), [data, planeta, column, comparison, valueFilter, filters]);
+    filterSelecionado,
+    setFilterSelecionado,
+    excluirTodos,
+    excluirFiltro,
+  }), [data, planeta, column, comparison, valueFilter, filters, filterSelecionado]);
 
   return (
     <ContextTable.Provider value={ value }>

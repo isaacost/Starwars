@@ -7,7 +7,8 @@ function Filter() {
   const { comparison, handleComparison } = useContext(ContextTable);
   const { valueFilter, handleValue } = useContext(ContextTable);
   const { handleButtonFilter } = useContext(ContextTable);
-  const { filters } = useContext(ContextTable);
+  const { filters, filterSelecionado } = useContext(ContextTable);
+  const { excluirTodos, excluirFiltro } = useContext(ContextTable);
 
   return (
     <div>
@@ -57,6 +58,38 @@ function Filter() {
         >
           Filtar
         </button>
+      </div>
+      <div>
+        <p>Filtros Aplicados:</p>
+        {
+          filterSelecionado.length > 0
+          && (
+            <button
+              type="button"
+              data-testid="button-remove-filters"
+              onClick={ excluirTodos }
+            >
+              Excluir todos
+            </button>
+          )
+        }
+
+        <div>
+          {
+            filterSelecionado?.map((e, i) => (
+              <div data-testid="filter" key={ i }>
+                <p>{`${e.column} ${e.comparison} ${e.value}`}</p>
+                <button
+                  type="button"
+                  onClick={ () => excluirFiltro(e) }
+                >
+                  X
+                </button>
+
+              </div>
+            ))
+          }
+        </div>
       </div>
     </div>
   );
