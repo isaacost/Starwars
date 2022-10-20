@@ -7,9 +7,7 @@ function Filter() {
   const { comparison, handleComparison } = useContext(ContextTable);
   const { valueFilter, handleValue } = useContext(ContextTable);
   const { handleButtonFilter } = useContext(ContextTable);
-
-  const columns = ['population', 'orbital_period', 'diameter',
-    'rotation_period', 'surface_water'];
+  const { filters } = useContext(ContextTable);
 
   return (
     <div>
@@ -22,7 +20,6 @@ function Filter() {
           onChange={ handlePlaneta }
         />
       </div>
-
       <div>
         <select
           value={ column }
@@ -30,7 +27,7 @@ function Filter() {
           data-testid="column-filter"
         >
           {
-            columns.map((e) => (
+            filters.map((e) => (
               <option key={ e } value={ e }>
                 {e}
               </option>
@@ -61,7 +58,6 @@ function Filter() {
           Filtar
         </button>
       </div>
-
     </div>
   );
 }

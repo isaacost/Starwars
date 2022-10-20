@@ -2,12 +2,16 @@ import PropTypes from 'prop-types';
 import { useEffect, useMemo, useState } from 'react';
 import ContextTable from './ContextTable';
 
+const optionsFilter = ['population', 'orbital_period', 'diameter',
+  'rotation_period', 'surface_water'];
+
 function ProviderTable({ children }) {
   const [data, setData] = useState([]);
   const [planeta, setPlaneta] = useState('');
-  const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [valueFilter, setValeuFilter] = useState(0);
+  const [filters, setFilters] = useState(optionsFilter);
+  const [column, setColumn] = useState(filters[0]);
 
   const handleColumn = ({ target: { value } }) => {
     setColumn(value);
@@ -22,6 +26,9 @@ function ProviderTable({ children }) {
   };
 
   const handleButtonFilter = () => {
+    const filterFilters = filters.filter((e) => e !== column);
+    setFilters(filterFilters);
+    setColumn(filterFilters[0]);
     if (comparison === 'maior que') {
       const filter = data.filter((e) => Number(e[column]) > Number(valueFilter));
       setData(filter);
@@ -62,7 +69,9 @@ function ProviderTable({ children }) {
     valueFilter,
     handleValue,
     handleButtonFilter,
-  }), [data, planeta, column, comparison, valueFilter]);
+    filters,
+    setFilters,
+  }), [data, planeta, column, comparison, valueFilter, filters]);
 
   return (
     <ContextTable.Provider value={ value }>
