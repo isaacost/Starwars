@@ -23,59 +23,61 @@ function Table() {
           <th>url</th>
         </tr>
       </thead>
-      <tbody>
-        {
-          (data
-            .filter((element) => element.name.toLowerCase()
-              .includes(planeta.toLowerCase()))
-            .map((element) => (
-              <tr key={ element.name }>
-                <td data-testid="planet-name">
-                  {element.name}
-                </td>
-                <td>
-                  {element.climate}
-                </td>
-                <td>
-                  {element.diameter}
-                </td>
-                <td>
-                  {element.edited}
-                </td>
-                <td>
-                  {element.films.map((e, i) => (
-                    <ul key={ i }>
-                      <li>{e}</li>
-                    </ul>
-                  ))}
-                </td>
-                <td>
-                  {element.gravity}
-                </td>
-                <td>
-                  {element.orbital_period}
-                </td>
-                <td>
-                  {element.population}
-                </td>
-                <td>
-                  {element.rotation_period}
-                </td>
-                <td>
-                  {element.surface_water}
-                </td>
-                <td>
-                  {element.created}
-                </td>
-                <td>
-                  {element.terrain}
-                </td>
-                <td>
-                  {element.url}
-                </td>
-              </tr>
-            )))
-        }
+      <tbody data-testid="tabela">
+        {data.length > 0 && (
+          <div data-testid="tabela-linhas">
+            {data
+              .filter((element) => element.name.toLowerCase()
+                .includes(planeta.toLowerCase()))
+              .map((element) => (
+                <tr key={ element.name }>
+                  <td data-testid="planet-name">
+                    {element.name}
+                  </td>
+                  <td>
+                    {element.climate}
+                  </td>
+                  <td>
+                    {element.diameter}
+                  </td>
+                  <td>
+                    {element.edited}
+                  </td>
+                  <td>
+                    {element.films.map((e, i) => (
+                      <ul key={ i }>
+                        <li>{e}</li>
+                      </ul>
+                    ))}
+                  </td>
+                  <td>
+                    {element.gravity}
+                  </td>
+                  <td>
+                    {element.orbital_period}
+                  </td>
+                  <td>
+                    {element.population}
+                  </td>
+                  <td>
+                    {element.rotation_period}
+                  </td>
+                  <td>
+                    {element.surface_water}
+                  </td>
+                  <td>
+                    {element.created}
+                  </td>
+                  <td>
+                    {element.terrain}
+                  </td>
+                  <td>
+                    {element.url}
+                  </td>
+                </tr>
+              ))}
+          </div>
+        )}
       </tbody>
     </table>
   );

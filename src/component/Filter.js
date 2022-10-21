@@ -22,6 +22,7 @@ function Filter() {
           data-testid="name-filter"
           value={ planeta }
           onChange={ handlePlaneta }
+          placeholder="planeta"
         />
       </div>
 
@@ -87,6 +88,7 @@ function Filter() {
               <div data-testid="filter" key={ i }>
                 <p>{`${e.column} ${e.comparison} ${e.value}`}</p>
                 <button
+                  data-testid={ `button-excluir-${i}` }
                   type="button"
                   onClick={ () => excluirFiltro(e) }
                 >
