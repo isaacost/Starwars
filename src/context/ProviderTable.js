@@ -53,17 +53,21 @@ function ProviderTable({ children }) {
     if (comparison === 'menor que') {
       const filter = data.filter((e) => Number(e[column]) < Number(valueFilter));
       const apagado = data.filter((e) => Number(e[column]) >= Number(valueFilter));
+      const unknowns = [...data].filter((e) => e[column] === 'unknown');
+      const retirados = [...unknowns, ...apagado];
       console.log(apagado);
       setData(filter);
       setFilterSelecionado([...filterSelecionado,
-        { column, comparison, value: valueFilter, array: apagado }]);
+        { column, comparison, value: valueFilter, array: retirados }]);
     }
     if (comparison === 'igual a') {
       const filter = data.filter((e) => e[column] === valueFilter);
       const apagado = data.filter((e) => Number(e[column]) !== Number(valueFilter));
+      const unknowns = [...data].filter((e) => e[column] === 'unknown');
+      const retirados = [...unknowns, ...apagado];
       setData(filter);
       setFilterSelecionado([...filterSelecionado,
-        { column, comparison, value: valueFilter, array: apagado }]);
+        { column, comparison, value: valueFilter, array: retirados }]);
     }
   }, [column, comparison, data, filterSelecionado, filters, valueFilter]);
 
