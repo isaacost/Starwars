@@ -42,22 +42,28 @@ function ProviderTable({ children }) {
     setFilters(filterFilters);
     setColumn(filterFilters[0]);
     if (comparison === 'maior que') {
+      const apagado = data.filter((e) => Number(e[column]) <= Number(valueFilter));
+      const unknowns = [...data].filter((e) => e[column] === 'unknown');
+      const retirados = [...unknowns, ...apagado];
       const filter = data.filter((e) => Number(e[column]) > Number(valueFilter));
       setData(filter);
       setFilterSelecionado([...filterSelecionado,
-        { column, comparison, value: valueFilter, array: filter }]);
+        { column, comparison, value: valueFilter, array: retirados }]);
     }
     if (comparison === 'menor que') {
       const filter = data.filter((e) => Number(e[column]) < Number(valueFilter));
+      const apagado = data.filter((e) => Number(e[column]) >= Number(valueFilter));
+      console.log(apagado);
       setData(filter);
       setFilterSelecionado([...filterSelecionado,
-        { column, comparison, value: valueFilter, array: filter }]);
+        { column, comparison, value: valueFilter, array: apagado }]);
     }
     if (comparison === 'igual a') {
       const filter = data.filter((e) => e[column] === valueFilter);
+      const apagado = data.filter((e) => Number(e[column]) !== Number(valueFilter));
       setData(filter);
       setFilterSelecionado([...filterSelecionado,
-        { column, comparison, value: valueFilter, array: filter }]);
+        { column, comparison, value: valueFilter, array: apagado }]);
     }
   }, [column, comparison, data, filterSelecionado, filters, valueFilter]);
 
@@ -106,9 +112,9 @@ function ProviderTable({ children }) {
       const filter = filterSelecionado.filter((e) => e.column !== element.column);
       setFilterSelecionado(filter);
       setFilters([...filters, element.column]);
-      setData(filterSelecionado[filterSelecionado.length - 2].array);
+      setData([...data, ...element.array]);
     }
-  }, [filterSelecionado, filters, inicial]);
+  }, [filterSelecionado, filters, inicial, data]);
 
   const handlePlaneta = ({ target: { value } }) => {
     setPlaneta(value);
