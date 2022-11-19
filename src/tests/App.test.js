@@ -6,6 +6,7 @@ import App from '../App';
 describe('Testes Projeto Star Wars', () => {
   it('Testando se os filtros foram renderizados', () => {
     render(<App />);
+    // testando a nova chave ssh
 
     const filterName = screen.getByTestId('name-filter');
     expect(filterName).toBeInTheDocument();
