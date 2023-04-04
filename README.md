@@ -1,13 +1,57 @@
-# :construction: README customizado em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto no qual você pode customizar e reutilizar todas as vezes que for executar o trybe-publisher.
+<h4 align="center">
+  <img width="180px" alt="trybe wallet logo" src="https://user-images.githubusercontent.com/100851855/229931000-6053937a-2e1f-449e-bc13-71a5cfbfcc26.png" />
+  <br /><br />
+</h4>
 
-Para deixá-lo com a sua cara, basta alterar o seguinte arquivo da sua máquina: ~/.student-repo-publisher/custom/_NEW_README.md
+<hr />
 
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+
+# Projeto StarWars Planets
+
+Projeto realizado durante módulo de Front-end do curso de desenvolvimento web da Trybe.
+
+<details>
+  <summary><strong>O que foi feito</strong></summary></br>
+
+  Neste projeto desenvolvi uma lista com filtros de planetas do universo de Star Wars usando Context API e Hooks para controlar os estados globais.
+  
+A aplicação foi desenvolvida com:
+
+- `React`
+- `JavaScript`
+- `Contex-API`
+- `Hooks`
+
+</details>
+<details>
+  <summary><strong>Como rodar o projeto</strong></summary></br>
+  
+- [ ] git clone do repositório
+- [ ] `npm install`
+- [ ] `npm start`
+- [ ] acessar no browser `http://localhost:3000`
+
+</details>
+
+<details>
+  <summary><strong>:memo: Tecnologias utilizadas</strong></summary><br />
+  
+- `React`
+- `JavaScript`
+- `Contex-API`
+- `Hooks`
+- `RTL`
+
+
+</details>
+<details>
+  <summary><strong>:memo: Habilidades</strong></summary><br />
+
+- Utilizar a Context API do React para gerenciar estado.
+- Utilizar o React Hook useState;
+- Utilizar o React Hook useContext;
+- Utilizar o React Hook useEffect;
+- Criar React Hooks customizados.
+- Escrever testes para garantir que sua aplicação possua uma boa cobertura de testes.
+
+</details>
